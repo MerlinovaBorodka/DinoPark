@@ -6,11 +6,13 @@
 
 using namespace std;
 
-int getRandomInt(int min, int max){
+int getRandomInt(int min, int max)
+{
   return min + random() % max;
 }
 
-int main() {
+int main() 
+{
   srand(time(0)); // это для рандома
   int score = 0; // здесь будем хранить счет
   int i = 0;
@@ -24,16 +26,12 @@ int main() {
   Player player("sprites/dino", 4, 10, 10);
   AnimSprite christmassTree("sprites/christmass_tree", 2, 5, 5);
   Sprite gift("sprites/gift", 25, 10);
-  Sprite spike1("sprites/spike", 25, 20);
-  Sprite spike2("sprites/spike", 35, 10);
-  Sprite spike3("sprites/spike", 45, 15);
-  Sprite spike4("sprites/spike", 10, 20);
-  Sprite spike5("sprites/spike", 55, 30);
-  Sprite spike6("sprites/spike", 45, 21);
-  Sprite spike7("sprites/spike", 15, 17);
-  Sprite spike8("sprites/spike", 32, 21);
-  Sprite spike9("sprites/spike", 11, 24);
-  Sprite spike10("sprites/spike", 28, 17);
+  vector <Sprite> v_spikes();
+  for (int i = 0; i < 10; i++)
+  {
+    Sprite spike("sprites/spike", rand() % 4);
+    v_spikes.push_back(spike);
+  }
   // Позволяем читать символы без нажатия Enter 
   TerminalDecorator::setNeedEnter(false);
   // Отключить вывод вводимых символов
@@ -50,16 +48,8 @@ int main() {
     christmassTree.drawNext();
     // рисуем подарок
     gift.draw();
-    spike1.draw();
-    spike2.draw();
-    spike3.draw();
-    spike4.draw();
-    spike5.draw();
-    spike6.draw();
-    spike7.draw();
-    spike8.draw();
-    spike9.draw();
-    spike10.draw();
+    for (int i = 0; i < v_spikes.size(); i++)
+      v_spikes[i].drawNext();
     // обрабатываем введенный символ,
     // чтобы понять, куда двигаться
     // странные числа - это то, что получается при вводе 
@@ -85,10 +75,13 @@ int main() {
       score++;
     }
     
-    if(player.hasCollisionWith(spike1) || player.hasCollisionWith(spike2) || player.hasCollisionWith(spike3) || player.hasCollisionWith(spike4) || player.hasCollisionWith(spike5) || player.hasCollisionWith(spike6) || player.hasCollisionWith(spike7) || player.hasCollisionWith(spike8) || player.hasCollisionWith(spike9) || player.hasCollisionWith(spike10))
+    for (int i = 0; i < v_spikes.size(); i++)
     {
-        cout << "YOU DIED, GG";
-        exit(0);
+        if (player.hasCollisionWith(v_spikes[i]))
+        {
+            cout << "YOU DIED";
+            exit(0);
+        }
     }
 
     // Перемещаемся в позицию 50 по горизонтали и 1 по вертикали
