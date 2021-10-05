@@ -29,7 +29,7 @@ int main()
 	vector <Sprite> v_spikes;
 	for (int i = 0; i < 10; i++)
 	{
-		Sprite spike("sprites/spike", rand() % 50 + 25, rand() % 30 + 20);
+		Sprite spike("sprites/spike", getRandomInt(20, 30), getRandomInt(10, 20));
 		v_spikes.push_back(spike);
 	}
 	// Позволяем читать символы без нажатия Enter 
@@ -70,7 +70,7 @@ int main()
 
 		if (player.hasCollisionWith(gift)) 
 		{
-			gift.relocate(getRandomInt(1, 50), getRandomInt(1, 15));
+			gift.relocate(getRandomInt(1, 50), getRandomInt(1, 20));
 			score++;
 		}
 
@@ -78,6 +78,7 @@ int main()
 		{
 			if (player.hasCollisionWith(v_spikes[i]))
 			{
+        TerminalDecorator::clrscr();
 				cout << "YOU DIED";
 				exit(0);
 			}
@@ -90,8 +91,8 @@ int main()
 		// печатаем на экран счет (как результат он всегда 
 		// будет печататься в позиции 50 по горизонтали и 1 по вертикали)
 		cout << "Score: " << score;
-		TerminalDecorator::gotoxy(50, 2);
-		cout << "DINO: " << player.hp << " " << player.speed << " " << player.hungry;
+		//TerminalDecorator::gotoxy(50, 2);
+		//cout << "DINO: " << player.hp << " " << player.speed << " " << player.hungry;
 	}
 
 	// Возвращаем терминал в обычный режим работы.
