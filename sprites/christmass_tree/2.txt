@@ -1,5 +1,5 @@
-   C
-  RCC
- CCCCR
+   C   
+  RCC  
+ CCCCR 
 RCCRCCC
-   W
+   W   
