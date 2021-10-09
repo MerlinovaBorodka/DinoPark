@@ -53,6 +53,13 @@ public:
 		return colCollision && rowCollision;
 	}
 
+	// проверка на пересечение с каким-либо спрайтом из вектора
+	bool HasAnyCollision(vector <Sprite> v)
+	{
+		for (int i = 0; i < v.size(); i++) if (this->hasCollisionWith(v[i])) return true;
+		return false;
+	}
+
 	virtual int getWidth() { return pic.getWidth(); }
 	virtual int getHeight() { return pic.getHeight(); }
 

@@ -3,6 +3,7 @@
 #include <vector>
 #include "directed_sprite.h"
 #include "player.h"
+#include <time.h>
 
 using namespace std;
 
@@ -15,23 +16,28 @@ int main()
 {
 	srand(time(0)); // это для рандома
 	int score = 0; // здесь будем хранить счет
-	int i = 0;
 	// в эту переменную будем считывать символы
 	// и реагировать на ввод W, A, S, D
 	char key;
-
+	// для корректного выхода из программы после смерти игрока
+	bool flag = false;
 	// Очищаем терминал
 	TerminalDecorator::clrscr();
 	// DirectedSprite player("sprites/dino", 4, 1, 1);
+	vector <Sprite> all_obj;
 	Player player("sprites/dino", 4, 10, 10);
+	all_obj.push_back(player);
 	AnimSprite christmassTree("sprites/christmass_tree", 2, 5, 5);
+	all_obj.push_back(christmassTree);
 	Sprite gift("sprites/gift", 25, 10);
 	vector <Sprite> v_spikes;
 	for (int i = 0; i < 10; i++)
 	{
 		Sprite spike("sprites/spike", getRandomInt(20, 30), getRandomInt(10, 20));
+		while (gift.hasCollisionWith(spike) || spike.HasAnyCollision(v_spikes)) spike.relocate(getRandomInt(20, 30), getRandomInt(10, 20));
 		v_spikes.push_back(spike);
 	}
+
 	// Позволяем читать символы без нажатия Enter 
 	TerminalDecorator::setNeedEnter(false);
 	// Отключить вывод вводимых символов
@@ -70,7 +76,9 @@ int main()
 
 		if (player.hasCollisionWith(gift)) 
 		{
-			gift.relocate(getRandomInt(1, 50), getRandomInt(1, 20));
+			do
+				gift.relocate(getRandomInt(1, 50), getRandomInt(1, 25));
+			while (gift.HasAnyCollision(all_obj) || gift.HasAnyCollision(v_spikes));
 			score++;
 		}
 
@@ -78,12 +86,12 @@ int main()
 		{
 			if (player.hasCollisionWith(v_spikes[i]))
 			{
-        TerminalDecorator::clrscr();
-				cout << "YOU DIED";
-				exit(0);
+				TerminalDecorator::clrscr();
+				flag = true;
+				break;
 			}
 		}
-
+		if (flag) break;
 		// Перемещаемся в позицию 50 по горизонтали и 1 по вертикали
 		TerminalDecorator::gotoxy(50, 1);
 		// Выставляем красный фон и белый шрифт
@@ -99,4 +107,5 @@ int main()
 	// (видим вводимые символы и после ввода ожидаем нажатия Enter)
 	TerminalDecorator::setNeedEnter(true);
 	TerminalDecorator::setEcho(true);
+	cout << "YOU DIED";
 }
