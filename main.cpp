@@ -23,20 +23,27 @@ int main()
 	bool flag = false;
 	// Очищаем терминал
 	TerminalDecorator::clrscr();
-	// DirectedSprite player("sprites/dino", 4, 1, 1);
 	vector <Sprite> all_obj;
-	Player player("sprites/dino", 4, 10, 10);
+	Player player("sprites/dino", 4, 10, 12);
 	all_obj.push_back(player);
 	AnimSprite christmassTree("sprites/christmass_tree", 2, 5, 5);
 	all_obj.push_back(christmassTree);
-	Sprite gift("sprites/gift", 25, 10);
+	Sprite gift("sprites/gift", 13, 7);
+	gift.draw();
 	vector <Sprite> v_spikes;
 	for (int i = 0; i < 10; i++)
 	{
 		Sprite spike("sprites/spike", getRandomInt(20, 30), getRandomInt(10, 20));
 		while (gift.hasCollisionWith(spike) || spike.HasAnyCollision(v_spikes)) spike.relocate(getRandomInt(20, 30), getRandomInt(10, 20));
 		v_spikes.push_back(spike);
+		spike.draw();
 	}
+
+	TerminalDecorator::gotoxy(50, 1);
+	// Выставляем чёрный фон и белый шрифт
+	TerminalDecorator::setColors(TerminalDecorator::white, TerminalDecorator::red);
+	// печатаем на экран стартовое сообщение
+	cout << "PRESS ANY WASD KEY";
 
 	// Позволяем читать символы без нажатия Enter 
 	TerminalDecorator::setNeedEnter(false);
@@ -55,6 +62,7 @@ int main()
 		christmassTree.drawNext();
 		// рисуем подарок
 		gift.draw();
+		// рисуем спайки
 		for (int i = 0; i < v_spikes.size(); i++) v_spikes[i].draw();
 		// обрабатываем введенный символ,
 		// чтобы понять, куда двигаться

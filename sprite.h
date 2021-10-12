@@ -26,7 +26,7 @@ public:
 	// (благодаря списку инициализации)
 	Sprite(std::string spriteSrc, int x = 0, int y = 0) : pic(spriteSrc), x(x), y(y)
 	{
-		draw();
+		//draw();
 	}
 	Sprite() {}
 
