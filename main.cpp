@@ -104,11 +104,8 @@ int main()
 		TerminalDecorator::gotoxy(50, 1);
 		// Выставляем красный фон и белый шрифт
 		TerminalDecorator::setColors(TerminalDecorator::white, TerminalDecorator::red);
-		// печатаем на экран счет (как результат он всегда 
-		// будет печататься в позиции 50 по горизонтали и 1 по вертикали)
+		// печатаем на экран счет
 		cout << "Score: " << score;
-		//TerminalDecorator::gotoxy(50, 2);
-		//cout << "DINO: " << player.hp << " " << player.speed << " " << player.hungry;
 	}
 
 	// Возвращаем терминал в обычный режим работы.
